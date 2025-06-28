@@ -1,0 +1,57 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Kayıt Formu</title>
+</head>
+<body>
+<h2>Kayıt Formu</h2>
+<form th:action="@{/register}" th:object="${user}" method="post">
+<p> Ad: <input type="text" th:field="*{name}">
+    <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
+</p>
+ <p>
+     Soyad: <input type="text" th:field="*{surname}">
+     <span th:if="${#fields.hasErrors('surname')}" th:errors="*{surname}"></span>
+ </p>
+<p>
+        E-posta: <input type="email" th:field="*{email}">
+        <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
+ </p>
+    <p>
+        Şifre: <input type="password" th:field="*{password}">
+        <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
+    </p>
+
+    <p>
+       Cinsiyet:
+        <select th:field="*{gender}">
+        <option value="">Seçiniz</option>
+            <option th:each="g : ${genders}" th:value="${g}" th:text="${g}"></option>
+        </select>
+        <span th:if="${#fields.hasErrors('gender')}" th:errors="*{gender}"></span></p>
+
+    <p>Doğum Tarihi: <input type="date" th:field="*{birthDate}"/>
+        <span th:if="${#fields.hasErrors('birthDate')}" th:errors="*{birthDate}"></span></p>
+    <p>Ülke:
+        <select th:field="*{country}">
+            <option value="">Seçiniz</option>
+            <option th:each="c : ${countries}" th:value="${c}" th:text="${c}"></option>
+        </select>
+        <span th:if="${#fields.hasErrors('country')}" th:errors="*{country}"></span></p>
+    <p>Hobiler: <br/>
+    <div th:each="hobby : ${hobbyList}">
+        <label>
+            <input type="checkbox" th:value="${hobby}" th:field="*{hobbies}"/>
+            <span th:text="${hobby}"></span>
+        </label><br/>
+    </div>
+    </p>
+    <button type="submit">Kayıt Ol</button>
+</form>
+<p th:if="${message}" style="color: green;" th:text="${message}"></p>
+</body>
+</html>
